@@ -148,36 +148,49 @@ body{font-family:'Vazirmatn',sans-serif;background:var(--bg);color:var(--t1);min
 ::-webkit-scrollbar-track{background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:var(--bg3);border-radius:3px}
 a{color:inherit;text-decoration:none}
-.sidebar{width:var(--sidebar-w);min-height:100vh;background:var(--bg2);border-left:1px solid var(--card-b);display:flex;flex-direction:column;flex-shrink:0;position:fixed;right:0;top:0;bottom:0;z-index:200;transition:transform .25s cubic-bezier(.4,0,.2,1),background .3s,border-color .3s}
-.logo{display:flex;align-items:center;gap:12px;padding:20px 16px 16px;border-bottom:1px solid var(--card-b)}
-.logo-img{width:38px;height:38px;border-radius:50%;overflow:hidden;border:1px solid var(--card-b);box-shadow:0 0 14px rgba(181,181,181,.3),0 0 8px rgba(255,255,255,.25);flex-shrink:0}
-.logo-img img{width:100%;height:100%;object-fit:cover}
-.logo-name{font-size:13.5px;font-weight:700;color:var(--t1)}
-.logo-sub{font-size:10px;color:var(--t3);margin-top:1px}
-.sb-close{display:none;position:absolute;left:12px;top:20px;background:var(--accent-d);border:1px solid var(--card-b);color:var(--t2);width:30px;height:30px;border-radius:8px;font-size:16px;align-items:center;justify-content:center;cursor:pointer}
-.nav-wrap{flex:1;overflow-y:auto;padding:6px 0 8px}
-.nav-sec{padding:14px 14px 4px;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--t3);font-weight:700}
-.nav-it{display:flex;align-items:center;gap:9px;padding:9px 14px;color:var(--t3);font-size:12.5px;cursor:pointer;border-right:2px solid transparent;transition:all .15s;margin:1px 6px}
-.nav-it i{font-size:16px;width:18px;text-align:center;flex-shrink:0}
-.nav-it:hover{background:var(--accent-d);color:var(--t2)}
-.nav-it.on{background:var(--accent-d);color:var(--t1);border-right-color:var(--accent);font-weight:600}
-.nav-badge{margin-right:auto;background:rgba(255,255,255,0.15);color:var(--accent2);font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700}
-.sb-foot{padding:12px 14px;border-top:1px solid var(--card-b)}
-.tg-btn{display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,#0098e6,#0077bb);color:#fff;border-radius:9px;padding:10px;font-size:12.5px;font-weight:600;font-family:inherit;border:none;cursor:pointer;width:100%;transition:.15s}
-.tg-btn:hover{filter:brightness(1.1)}
-.theme-btn{display:flex;align-items:center;justify-content:center;gap:7px;background:var(--accent-d);color:var(--t2);border-radius:9px;padding:8px;font-size:12px;font-weight:500;font-family:inherit;border:1px solid var(--card-b);cursor:pointer;width:100%;transition:.15s;margin-bottom:7px}
-.theme-btn:hover{background:var(--card-b);color:var(--t1)}
-.logout-btn{display:flex;align-items:center;justify-content:center;gap:7px;background:var(--red-bg);color:var(--red-t);border-radius:9px;padding:8px;font-size:12px;font-weight:500;font-family:inherit;border:1px solid rgba(239,68,68,0.2);cursor:pointer;width:100%;transition:.15s;margin-top:6px}
-.logout-btn:hover{background:rgba(239,68,68,0.2)}
-.mob-top{display:none;position:fixed;top:0;right:0;left:0;height:52px;background:var(--bg2);border-bottom:1px solid var(--card-b);z-index:150;align-items:center;justify-content:space-between;padding:0 14px;transition:background .3s}
+.sidebar{width:var(--sidebar-w);min-height:100vh;background:linear-gradient(180deg,var(--bg2) 0%,var(--bg) 100%);border-left:1px solid var(--card-b);display:flex;flex-direction:column;flex-shrink:0;position:fixed;right:0;top:0;bottom:0;z-index:200;transition:transform .25s cubic-bezier(.4,0,.2,1),background .3s,border-color .3s;box-shadow:8px 0 30px rgba(0,0,0,.25)}
+.sidebar::after{content:'';position:absolute;top:0;left:-1px;bottom:0;width:1px;background:linear-gradient(180deg,transparent,var(--accent2),transparent);opacity:.4}
+.logo{position:relative;display:flex;align-items:center;gap:12px;padding:22px 16px 18px;border-bottom:1px solid var(--card-b);overflow:hidden}
+.logo::before{content:'';position:absolute;top:-40%;right:-20%;width:140px;height:140px;background:radial-gradient(circle,rgba(181,181,181,.18),transparent 70%);pointer-events:none}
+.logo-img{position:relative;width:40px;height:40px;border-radius:50%;overflow:hidden;border:1px solid var(--card-b);flex-shrink:0;box-shadow:0 0 0 3px var(--accent-d)}
+.logo-img::after{content:'';position:absolute;inset:-3px;border-radius:50%;border:1px solid var(--accent2);opacity:.5;animation:logoPulse 2.6s ease-in-out infinite}
+@keyframes logoPulse{0%,100%{transform:scale(1);opacity:.55}50%{transform:scale(1.16);opacity:0}}
+.logo-img img{width:100%;height:100%;object-fit:cover;position:relative;z-index:1}
+.logo-name{font-size:14px;font-weight:800;letter-spacing:-.01em;background:linear-gradient(90deg,var(--t1),var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.logo-sub{font-size:10px;color:var(--t3);margin-top:2px;display:flex;align-items:center;gap:5px}
+.logo-sub::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);flex-shrink:0}
+.sb-close{display:none;position:absolute;left:12px;top:20px;background:var(--accent-d);border:1px solid var(--card-b);color:var(--t2);width:30px;height:30px;border-radius:8px;font-size:16px;align-items:center;justify-content:center;cursor:pointer;transition:.15s}
+.sb-close:hover{background:var(--red-bg);color:var(--red-t);transform:rotate(90deg)}
+.nav-wrap{flex:1;overflow-y:auto;padding:10px 0 8px}
+.nav-wrap::-webkit-scrollbar{width:3px}
+.nav-wrap::-webkit-scrollbar-thumb{background:var(--card-b)}
+.nav-sec{display:flex;align-items:center;gap:8px;padding:16px 16px 6px;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--t3);font-weight:800}
+.nav-sec::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--card-b),transparent)}
+.nav-it{position:relative;display:flex;align-items:center;gap:10px;padding:9px 12px;color:var(--t3);font-size:12.5px;font-weight:500;cursor:pointer;border-radius:10px;transition:all .18s cubic-bezier(.4,0,.2,1);margin:2px 8px;overflow:hidden}
+.nav-it i{font-size:15px;width:26px;height:26px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border-radius:8px;background:var(--accent-d);transition:all .18s}
+.nav-it:hover{background:var(--accent-d);color:var(--t1);transform:translateX(-2px)}
+.nav-it:hover i{background:var(--card-b)}
+.nav-it.on{background:linear-gradient(90deg,var(--accent-d),transparent);color:var(--t1);font-weight:700;box-shadow:inset 0 0 0 1px var(--card-b)}
+.nav-it.on i{background:var(--accent);color:var(--on-accent);box-shadow:0 0 12px rgba(181,181,181,.4)}
+.nav-it.on::before{content:'';position:absolute;right:0;top:16%;bottom:16%;width:3px;border-radius:3px;background:linear-gradient(180deg,var(--accent),var(--accent2));box-shadow:0 0 8px var(--accent2)}
+.nav-badge{margin-right:auto;background:linear-gradient(135deg,var(--accent2),var(--t3));color:var(--bg);font-size:9px;padding:2px 7px;border-radius:20px;font-weight:800;min-width:16px;text-align:center}
+.sb-foot{padding:14px;border-top:1px solid var(--card-b);display:flex;flex-direction:column}
+.tg-btn{display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,#0098e6,#0077bb);color:#fff;border-radius:10px;padding:10px;font-size:12.5px;font-weight:600;font-family:inherit;border:none;cursor:pointer;width:100%;transition:.18s}
+.tg-btn:hover{filter:brightness(1.15);transform:translateY(-1px);box-shadow:0 6px 16px rgba(0,120,200,.35)}
+.theme-btn{display:flex;align-items:center;justify-content:center;gap:7px;background:var(--accent-d);color:var(--t2);border-radius:10px;padding:9px;font-size:12px;font-weight:600;font-family:inherit;border:1px solid var(--card-b);cursor:pointer;width:100%;transition:.18s;margin-bottom:7px}
+.theme-btn:hover{background:var(--card-b);color:var(--t1);transform:translateY(-1px)}
+.logout-btn{display:flex;align-items:center;justify-content:center;gap:7px;background:var(--red-bg);color:var(--red-t);border-radius:10px;padding:9px;font-size:12px;font-weight:600;font-family:inherit;border:1px solid rgba(239,68,68,0.2);cursor:pointer;width:100%;transition:.18s;margin-top:6px}
+.logout-btn:hover{background:rgba(239,68,68,0.25);transform:translateY(-1px);box-shadow:0 6px 16px rgba(239,68,68,.2)}
+.mob-top{display:none;position:fixed;top:0;right:0;left:0;height:54px;background:rgba(22,22,22,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--card-b);z-index:150;align-items:center;justify-content:space-between;padding:0 14px;transition:background .3s}
 .mob-top .ml{display:flex;align-items:center;gap:9px}
-.mob-logo{width:28px;height:28px;border-radius:50%;overflow:hidden;box-shadow:0 0 8px rgba(181,181,181,.35)}
+.mob-logo{width:30px;height:30px;border-radius:50%;overflow:hidden;box-shadow:0 0 0 2px var(--accent-d),0 0 10px rgba(181,181,181,.3)}
 .mob-logo img{width:100%;height:100%;object-fit:cover}
-.mob-title{color:var(--t1);font-size:13px;font-weight:700}
+.mob-title{color:var(--t1);font-size:13px;font-weight:800;background:linear-gradient(90deg,var(--t1),var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 .mob-right{display:flex;gap:6px}
-.menu-btn,.theme-mob{background:var(--accent-d);border:1px solid var(--card-b);color:var(--t2);width:34px;height:34px;border-radius:8px;font-size:17px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.15s}
-.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:190;backdrop-filter:blur(3px)}
-.overlay.show{display:block}
+.menu-btn,.theme-mob{background:var(--accent-d);border:1px solid var(--card-b);color:var(--t2);width:34px;height:34px;border-radius:9px;font-size:17px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.18s}
+.menu-btn:hover,.theme-mob:hover{background:var(--card-b);color:var(--t1);transform:translateY(-1px)}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:190}
+.overlay.show{display:block;animation:fi .2s ease}
 .main{margin-right:var(--sidebar-w);flex:1;padding:28px 28px 60px;min-width:0;transition:margin .25s}
 .pg{display:none}
 .pg.on{display:block;animation:fi .2s ease}
@@ -805,6 +818,7 @@ a{color:inherit;text-decoration:none}
     <div class="nav-it" data-pg="errors"><i class="ti ti-alert-triangle"></i> خطاها</div>
     <div class="nav-it" data-pg="testws"><i class="ti ti-wifi"></i> تست WebSocket</div>
     <div class="nav-it" data-pg="settings"><i class="ti ti-settings"></i> تنظیمات</div>
+    <div class="nav-it" data-pg="telegram"><i class="ti ti-brand-telegram"></i> ربات تلگرام <span class="nav-badge" id="tg-nb" style="display:none">✓</span></div>
     <div class="nav-it" data-pg="support"><i class="ti ti-headset"></i> پشتیبانی</div>
   </div>
   <div class="sb-foot">
@@ -1227,6 +1241,33 @@ a{color:inherit;text-decoration:none}
     </div>
   </div>
 </section>
+<section class="pg" id="pg-telegram">
+  <div class="topbar">
+    <div><div class="tb-title"><i class="ti ti-brand-telegram"></i> ربات تلگرام</div><div class="tb-sub">اتصال پنل به ربات فروش/مدیریت تلگرام</div></div>
+    <div class="tb-right"><span class="badge bg-red" id="tg-status-badge"><span class="dot dr"></span> قطع</span></div>
+  </div>
+  <div class="pw-panel" style="max-width:520px">
+    <div class="pw-hero">
+      <div class="pw-hero-icon" style="background:linear-gradient(135deg,#0098e6,#0077bb)"><i class="ti ti-brand-telegram"></i></div>
+      <div class="pw-hero-text">
+        <div class="pw-hero-title">اتصال ربات تلگرام</div>
+        <div class="pw-hero-sub" id="tg-username-sub">توکن ربات و آیدی عددی ادمین را وارد کنید</div>
+      </div>
+    </div>
+    <div class="pw-body">
+      <div class="pw-field">
+        <label>توکن ربات (Bot API Token)</label>
+        <input class="pw-input" type="password" id="tg-token" placeholder="مثال: 123456789:AAH...">
+        <button class="pw-eye" type="button" onclick="togglePwField('tg-token',this)"><i class="ti ti-eye"></i></button>
+      </div>
+      <div class="pw-field" style="margin-bottom:18px">
+        <label>آیدی عددی ادمین (Admin Chat ID)</label>
+        <input class="pw-input" style="padding-left:14px" type="text" id="tg-admin-id" placeholder="مثال: 123456789" inputmode="numeric">
+      </div>
+      <button class="pw-submit" style="background:linear-gradient(135deg,#0098e6,#0077bb);box-shadow:0 6px 18px rgba(0,140,220,.32)" onclick="saveTelegramSettings()" id="tg-save-btn"><i class="ti ti-device-floppy"></i> ذخیره تنظیمات تلگرام</button>
+    </div>
+  </div>
+</section>
 <section class="pg" id="pg-support">
   <div class="topbar"><div><div class="tb-title"><i class="ti ti-headset"></i> پشتیبانی</div></div></div>
   <div class="srv-panel">
@@ -1329,7 +1370,7 @@ overlay.addEventListener('click',closeSb);
 function navTo(name){
   document.querySelectorAll('.nav-it').forEach(n=>n.classList.toggle('on',n.dataset.pg===name));
   document.querySelectorAll('.pg').forEach(p=>p.classList.toggle('on',p.id==='pg-'+name));
-  const loaders={links:loadLinks,connections:loadConns,errors:loadErrs,logs:loadActivity,cfgdash:loadCfgDash};
+  const loaders={links:loadLinks,connections:loadConns,errors:loadErrs,logs:loadActivity,cfgdash:loadCfgDash,telegram:loadTelegramSettings};
   if(loaders[name])loaders[name]();
   closeSb();window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -1796,6 +1837,38 @@ async function changePw(){
     toast('رمز تغییر کرد ✓','ok');
     ['cp-cur','cp-new','cp-cf'].forEach(id=>document.getElementById(id).value='');
   }catch(e){toast('✗ '+e.message,'err')}
+}
+async function loadTelegramSettings(){
+  try{
+    const r=await authF('/api/settings/telegram'),d=await r.json();
+    document.getElementById('tg-token').value=d.bot_token||'';
+    document.getElementById('tg-admin-id').value=d.admin_id||'';
+    const badge=document.getElementById('tg-status-badge'),nb=document.getElementById('tg-nb'),sub=document.getElementById('tg-username-sub');
+    if(d.connected){
+      badge.className='badge bg-green';badge.innerHTML='<span class="dot dg pulse"></span> متصل';
+      nb.style.display='inline-flex';
+      sub.textContent=d.bot_username?('ربات متصل: @'+d.bot_username):'ربات متصل است';
+    }else{
+      badge.className='badge bg-red';badge.innerHTML='<span class="dot dr"></span> قطع';
+      nb.style.display='none';
+      sub.textContent='توکن ربات و آیدی عددی ادمین را وارد کنید';
+    }
+  }catch(e){}
+}
+async function saveTelegramSettings(){
+  const token=document.getElementById('tg-token').value.trim(),adminId=document.getElementById('tg-admin-id').value.trim();
+  if(!token||!adminId){toast('توکن و آیدی ادمین را وارد کنید','err');return}
+  if(!/^\d+$/.test(adminId)){toast('آیدی ادمین باید فقط عدد باشد','err');return}
+  const btn=document.getElementById('tg-save-btn');
+  btn.disabled=true;btn.innerHTML='<i class="ti ti-loader-2" style="animation:spin .6s linear infinite"></i> در حال ذخیره...';
+  try{
+    const r=await authF('/api/settings/telegram',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({bot_token:token,admin_id:adminId})});
+    const d=await r.json().catch(()=>({}));
+    if(!r.ok)throw new Error(d.detail||'خطا در ذخیره تنظیمات');
+    toast('تنظیمات تلگرام ذخیره شد ✓','ok');
+    loadTelegramSettings();
+  }catch(e){toast('✗ '+e.message,'err')}
+  finally{btn.disabled=false;btn.innerHTML='<i class="ti ti-device-floppy"></i> ذخیره تنظیمات تلگرام';}
 }
 function togglePwField(id,btn){
   const inp=document.getElementById(id);
