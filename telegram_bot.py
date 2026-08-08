@@ -46,6 +46,38 @@ _client: httpx.AsyncClient | None = None
 _poll_task: asyncio.Task | None = None
 _running = False
 _pending: dict = {}   # chat_id -> {"action": "wizard", "step": "...", "data": {...}}
+_bot_username: str | None = None
+
+def _rebuild_api_base():
+    global API_BASE
+    API_BASE = f"https://api.telegram.org/bot{BOT_TOKEN}"
+
+def configure(token: str, admin_ids):
+    """توکن و لیست آیدی ادمین‌ها رو به‌صورت داینامیک (مثلاً از پنل وب) ست می‌کنه.
+    این فقط متغیرهای ماژول رو آپدیت می‌کنه؛ برای اعمال واقعی باید ربات
+    متوقف و دوباره start بشه (به restart_bot نگاه کن)."""
+    global BOT_TOKEN, ADMIN_IDS, _bot_username
+    BOT_TOKEN = (token or "").strip()
+    ADMIN_IDS = {int(a) for a in admin_ids} if admin_ids else set()
+    _bot_username = None
+    _rebuild_api_base()
+
+def get_current_config() -> dict:
+    """تنظیمات فعلی (چه از env و چه از پنل ست شده باشه) رو برمی‌گردونه."""
+    return {"bot_token": BOT_TOKEN, "admin_ids": sorted(ADMIN_IDS)}
+
+async def _ensure_username_cached():
+    global _bot_username
+    if _bot_username or not _running or not BOT_TOKEN:
+        return
+    data = await _call("getMe")
+    if data and data.get("ok"):
+        _bot_username = data["result"].get("username")
+
+async def get_status() -> dict:
+    """وضعیت اتصال ربات برای نمایش در پنل (متصل/قطع + یوزرنیم ربات)."""
+    await _ensure_username_cached()
+    return {"connected": bool(_running and BOT_TOKEN), "username": _bot_username}
 
 # ── Config creation wizard ────────────────────────────────────────────────────
 # مراحل ساخت کانفیگ جدید، دقیقاً هم‌راستا با فیلدهایی که پنل وب موقع ساخت کاربر می‌گیره:
@@ -608,10 +640,40 @@ async def start_bot():
     _poll_task = asyncio.create_task(_poll_loop())
 
 async def stop_bot():
-    global _running, _client
+    global _running, _client, _poll_task
     _running = False
     if _poll_task:
         _poll_task.cancel()
+        try:
+            await _poll_task
+        except asyncio.CancelledError:
+            pass
+        _poll_task = None
     if _client:
         await _client.aclose()
         _client = None
+
+async def restart_bot(token: str, admin_ids) -> tuple[bool, str | None]:
+    """ربات رو با توکن/آیدی‌های ادمین جدید (که از پنل وب اومدن) عوض می‌کنه.
+    اول توکن رو با یه فراخوانی getMe اعتبارسنجی می‌کنه؛ اگه نامعتبر بود، ربات
+    فعلی دست‌نخورده باقی می‌مونه و یه پیام خطا برمی‌گرده. اگه معتبر بود، ربات
+    قبلی (اگه روشن بود) متوقف و با تنظیمات جدید دوباره راه‌اندازی می‌شه."""
+    global _bot_username
+    token = (token or "").strip()
+    if not token:
+        return False, "توکن نمی‌تواند خالی باشد"
+    try:
+        async with httpx.AsyncClient(timeout=httpx.Timeout(15.0, connect=8.0)) as c:
+            r = await c.post(f"https://api.telegram.org/bot{token}/getMe")
+            data = r.json()
+    except Exception as e:
+        return False, f"اتصال به تلگرام ناموفق بود: {e}"
+    if not data.get("ok"):
+        return False, data.get("description") or "توکن ربات نامعتبر است"
+    username = data["result"].get("username")
+
+    await stop_bot()
+    configure(token, admin_ids)
+    _bot_username = username
+    await start_bot()
+    return True, None
